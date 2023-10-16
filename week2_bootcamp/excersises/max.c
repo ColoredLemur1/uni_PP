@@ -3,15 +3,15 @@
 int main() {
     int numbers[] = {1,3,5,8,3};
     int i;
-    int sum = 0;
-
     int size = *(&numbers+1) - numbers;
+    int max=0;
 
     for(i=0;i<size;i++){
-        printf("%d \n",i);
-        sum+= numbers[i];
+        if(numbers[i]>max){
+            max=numbers[i];
+        }
     }
-    printf("the sum of the array is %d\n",sum);
+    printf("the biggest number in the array is %d\n",max);
 
     return 0;
 }
