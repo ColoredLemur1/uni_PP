@@ -48,8 +48,10 @@ int main() {
     char filename[buffer_size];
     int counter;
     char choice;
-    char date[11], time[6], cteps[4];
+    char date[11], time[6], cteps[7];
     int steps;
+    int smallest = 2000;
+    int smalli;
     FITNESS_DATA data[100];
 
 
@@ -86,10 +88,31 @@ int main() {
                 counter =0;
                 while(fgets(line,buffer_size,input)){
                     tokeniseRecord(line,",",date,time,cteps);
-                    //atoi
                     counter++;
                 }
                 printf("Total Records: %d\n",counter);
+                break;
+            
+            case 'C':
+            case 'c':
+                counter = 0;
+                int i;
+                while(fgets(line,buffer_size,input) != NULL){
+                    tokeniseRecord(line,",",date,time,cteps);
+                    strcpy(data[counter].date,date);
+                    strcpy(data[counter].time,time);
+                    data[counter].steps=atoi(cteps);
+                    counter++;
+                }
+
+                for(i=0;i<counter;i++){
+                    if(data[i].steps<smallest){
+                        smallest=data[i].steps;
+                        smalli = i;
+                    }
+                }
+
+                printf("Fewest steps: %s %s\n",data[smalli].date,data[smalli].time);
                 break;
             
             case 'Q':
