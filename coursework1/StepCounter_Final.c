@@ -58,6 +58,7 @@ int main() {
     int total;
     int mean;
     int starti;
+    int realstart;
     int endi;
     int interval;
     int period;
@@ -156,8 +157,9 @@ int main() {
                         }
                         interval+=1;
                     }else{
-                        if(period=1){
+                        if(period==1){
                             oldinterval=interval;
+                            realstart=starti;
                         }
                         interval=0;
                         period=0;
@@ -167,7 +169,7 @@ int main() {
                 }
                 starti=starti+1;
 
-                printf("Longest period start: %s %s\n",data[starti].date,data[starti].time);
+                printf("Longest period start: %s %s\n",data[realstart].date,data[realstart].time);
                 printf("Longest period end: %s %s\n",data[endi].date,data[endi].time);
                 break;
             
