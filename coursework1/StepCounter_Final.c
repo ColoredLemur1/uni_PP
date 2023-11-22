@@ -52,6 +52,16 @@ int main() {
     int steps;
     int smallest = 2000;
     int smalli;
+    int i;
+    int biggest;
+    int biggi;
+    int total;
+    int mean;
+    int starti;
+    int endi;
+    int interval;
+    int period;
+    int oldinterval;
     FITNESS_DATA data[100];
 
 
@@ -72,6 +82,7 @@ int main() {
 
             case 'A':
             case 'a':
+                counter =0;
                 printf("enter the name of the data file: ");
 
                 fgets(line,buffer_size, stdin);
@@ -82,21 +93,6 @@ int main() {
                     printf("Error: could not open file\n");
                     return 1;
                 }
-                break;
-            case 'B':
-            case 'b':
-                counter =0;
-                while(fgets(line,buffer_size,input)){
-                    tokeniseRecord(line,",",date,time,cteps);
-                    counter++;
-                }
-                printf("Total Records: %d\n",counter);
-                break;
-            
-            case 'C':
-            case 'c':
-                counter = 0;
-                int i;
                 while(fgets(line,buffer_size,input) != NULL){
                     tokeniseRecord(line,",",date,time,cteps);
                     strcpy(data[counter].date,date);
@@ -104,7 +100,14 @@ int main() {
                     data[counter].steps=atoi(cteps);
                     counter++;
                 }
-
+                break;
+            case 'B':
+            case 'b':
+                printf("Total Records: %d\n",counter);
+                break;
+            
+            case 'C':
+            case 'c':
                 for(i=0;i<counter;i++){
                     if(data[i].steps<smallest){
                         smallest=data[i].steps;
@@ -113,6 +116,59 @@ int main() {
                 }
 
                 printf("Fewest steps: %s %s\n",data[smalli].date,data[smalli].time);
+                break;
+            
+            case 'D':
+            case 'd':
+                for(i=0;i<counter;i++){
+                    if(data[i].steps > biggest){
+                        biggest = data[i].steps;
+                        biggi=i;
+                    }
+                }
+
+                printf("Largest steps: %s %s\n",data[biggi].date,data[biggi].time);
+                break;
+            
+            case 'E':
+            case 'e':
+                total =0;
+                for(i=0;i<counter;i++){
+                    total+=data[i].steps;
+                }
+                mean = total/counter;
+                printf("Mean step count: %d\n",mean);
+                break;
+            
+            case 'F':
+            case 'f':
+                interval=0;
+                for(i=0;i<counter;i++){
+                    if(data[i].steps > 500){
+                        if(interval >= oldinterval){
+                            period=1;
+                            endi = i;
+                        }else{
+                            period=0;
+                        }
+                        if(interval==0){
+                            starti=i;
+                        }
+                        interval+=1;
+                    }else{
+                        if(period=1){
+                            oldinterval=interval;
+                        }
+                        interval=0;
+                        period=0;
+                        
+                    }
+
+                }
+                starti=starti+1;
+
+                printf("Longest period start: %s %s\n",data[starti].date,data[starti].time);
+                printf("Longest period end: %s %s\n",data[endi].date,data[endi].time);
                 break;
             
             case 'Q':
