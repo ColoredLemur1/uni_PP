@@ -54,6 +54,8 @@ void tokeniseRecord(const char *input, const char *delimiter,
     free(inputCopy);
 
                     }
+
+
 void swap(Sorting *a,Sorting *b) {
     Sorting temp = *a;
     *a = *b;
@@ -67,6 +69,19 @@ void sortByVariable1(Sorting arr[], int n) {
                 swap(&arr[j], &arr[j + 1]);
             }
         }
+    }
+}
+
+void reverseArray( Sorting arr[], int size) {
+    int start = 0;
+    int end = size - 1;
+
+    while (start < end) {
+        
+        swap(&arr[start], &arr[end]);
+
+        start++;
+        end--;
     }
 }
 
@@ -90,7 +105,7 @@ int main() {
     FitnessData ordereddata[100];
 
 
-    printf("enter th ename of the data file: ");
+    printf("Enter Filename: ");
     fgets(line,buffer_size,stdin);
     sscanf(line,"%s ",filename);
 
@@ -115,16 +130,43 @@ int main() {
     }
 
     n= sizeof(steps)/sizeof(steps[0]);
-    printArray(steps,n);
+
     sortByVariable1(steps,n);
+    reverseArray(steps,n);
     printf("\n");
-    printArray(steps,n);
+    
 
 
 
     for(i=0;i<counter;i++){
-        
+        for(int j =0;j<counter;j++){
+            if(steps[i].index == data[j].index){
+                ordereddata[i]=data[j];
+            }
+        }
     }
+
+    fclose(input);
+
+    for(i=0;i<counter;i++){
+        printf("%d\n",ordereddata[i].steps);
+    }
+    
+    strcat(filename,".tsv");
+
+    FILE *file=fopen(filename,"w");
+
+    if(file!=NULL){
+        for(i=0;i<counter;i++){
+            fprintf(file,"%s\t%s\t%d\n",ordereddata[i].date,ordereddata[i].time,ordereddata[i].steps);
+        }
+        fclose(file);
+    }
+
+
+
+
+
 
 
 
