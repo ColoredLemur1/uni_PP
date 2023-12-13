@@ -111,18 +111,30 @@ int main() {
 
     FILE *input = fopen(filename, "r");
     if (!input){
-        printf("]Error: could not open file\n");
+        printf("Error: could not open file\n");
         return 1;
     }
 
+    
+
     while(fgets(line,buffer_size,input)!= NULL ){
-        tokeniseRecord(line, ",",date,time,csteps);
+        char *date = strtok(line, ",");
+        char *time = strtok(NULL, ",");
+        char *value = strtok(NULL, ",");
+        if (date != NULL && time != NULL && value != NULL) {
+            ;
+        }else{
+            printf("Error: could not open file\n");
+            return 1;
+        }
+        tokeniseRecord(line, ",",date,time,value);
         strcpy(data[counter].date,date);
         strcpy(data[counter].time,time);
-        data[counter].steps=atoi(csteps);
+        data[counter].steps=atoi(value);
         data[counter].index=counter;
         counter++;
     }
+
     Sorting steps[counter];
     for(i=0;i<counter;i++){
         steps[i].steps=data[i].steps;
@@ -137,7 +149,6 @@ int main() {
     
 
 
-
     for(i=0;i<counter;i++){
         for(int j =0;j<counter;j++){
             if(steps[i].index == data[j].index){
@@ -148,9 +159,9 @@ int main() {
 
     fclose(input);
 
-    for(i=0;i<counter;i++){
-        printf("%d\n",ordereddata[i].steps);
-    }
+    //for(i=0;i<counter;i++){
+        //printf("%d\n",ordereddata[i].steps);
+    //}
     
     strcat(filename,".tsv");
 
@@ -162,21 +173,7 @@ int main() {
         }
         fclose(file);
     }
+    return 0;
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    
     
 }
