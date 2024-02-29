@@ -86,7 +86,7 @@ int main() {
                 counter =0;
                 printf("enter the name of the data file: ");
 
-                fgets(line,buffer_size, stdin);
+                fgets(ine,buffer_size, stdin);
                 sscanf(line, "%s ", filename);
 
                 FILE *input = fopen(filename, "r");
