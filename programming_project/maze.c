@@ -3,6 +3,7 @@
 #include "utils.h"
 #include <assert.h>
 #include "errors.h"
+#include <stdlib.h>
 
 typedef struct Player{
     char symbol;
